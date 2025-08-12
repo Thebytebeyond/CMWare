@@ -3,9 +3,9 @@ plugins {
 }
 
 base {
-    archivesName = properties["archives_base_name"] as String
-    version = properties["mod_version"] as String
-    group = properties["maven_group"] as String
+    archivesName = "CMWare"
+    version = "0.1.0"
+    group = "com.cmware"
 }
 
 repositories {
@@ -17,27 +17,30 @@ repositories {
         name = "meteor-maven-snapshots"
         url = uri("https://maven.meteordev.org/snapshots")
     }
+    mavenCentral()
 }
+
 
 dependencies {
     // Fabric
-    minecraft("com.mojang:minecraft:${properties["minecraft_version"] as String}")
-    mappings("net.fabricmc:yarn:${properties["yarn_mappings"] as String}:v2")
-    modImplementation("net.fabricmc:fabric-loader:${properties["loader_version"] as String}")
+    minecraft("com.mojang:minecraft:${properties["minecraft_version"]}")
+    mappings("net.fabricmc:yarn:${properties["yarn_mappings"]}:v2")
+    modImplementation("net.fabricmc:fabric-loader:${properties["loader_version"]}")
 
-    // Meteor
-    modImplementation("meteordevelopment:meteor-client:${properties["minecraft_version"] as String}-SNAPSHOT")
+    // Meteor Client – using latest 0.5.9
+    modImplementation("meteordevelopment:meteor-client:1.21.8-SNAPSHOT")
 }
+
 
 tasks {
     processResources {
         val propertyMap = mapOf(
             "version" to project.version,
             "mc_version" to project.property("minecraft_version"),
+            "author" to "Thebytebeyond"
         )
 
         inputs.properties(propertyMap)
-
         filteringCharset = "UTF-8"
 
         filesMatching("fabric.mod.json") {
@@ -65,3 +68,4 @@ tasks {
         options.compilerArgs.add("-Xlint:unchecked")
     }
 }
+

@@ -1,7 +1,9 @@
 {
   "required": true,
-  "package": "com.example.addon.mixin",
+  "minVersion": "0.8",
+  "package": "com.thebytebeyond.cmware.mixin",
   "compatibilityLevel": "JAVA_21",
+  "mixins": [],
   "client": [
     "ExampleMixin"
   ],

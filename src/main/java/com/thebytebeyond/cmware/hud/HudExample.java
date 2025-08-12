@@ -1,6 +1,6 @@
-package com.example.addon.hud;
+package com.thebytebeyond.cmware.hud;
 
-import com.example.addon.AddonTemplate;
+import com.thebytebeyond.cmware.CMWare;
 import meteordevelopment.meteorclient.systems.hud.HudElement;
 import meteordevelopment.meteorclient.systems.hud.HudElementInfo;
 import meteordevelopment.meteorclient.systems.hud.HudRenderer;
@@ -10,7 +10,8 @@ public class HudExample extends HudElement {
     /**
      * The {@code name} parameter should be in kebab-case.
      */
-    public static final HudElementInfo<HudExample> INFO = new HudElementInfo<>(AddonTemplate.HUD_GROUP, "example", "HUD element example.", HudExample::new);
+    // got no clue what kebab-case is
+    public static final HudElementInfo<HudExample> INFO = new HudElementInfo<>(CMWare.HUD_GROUP, "example", "HUD element example.", HudExample::new);
 
     public HudExample() {
         super(INFO);
