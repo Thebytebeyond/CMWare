@@ -20,17 +20,22 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     // Fabric
     minecraft("com.mojang:minecraft:${properties["minecraft_version"]}")
     mappings("net.fabricmc:yarn:${properties["yarn_mappings"]}:v2")
     modImplementation("net.fabricmc:fabric-loader:${properties["loader_version"]}")
 
-    // Meteor Client – using latest 0.5.9
+    // Meteor Client — using snapshot matching your MC
     modImplementation("meteordevelopment:meteor-client:1.21.8-SNAPSHOT")
 }
 
+java {
+    // Make the build use a Java 21 toolchain explicitly
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
 
 tasks {
     processResources {
@@ -56,16 +61,11 @@ tasks {
         }
     }
 
-    java {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
     withType<JavaCompile> {
         options.encoding = "UTF-8"
-        options.release = 21
-        options.compilerArgs.add("-Xlint:deprecation")
-        options.compilerArgs.add("-Xlint:unchecked")
+        options.release.set(21)
+        options.compilerArgs.addAll(listOf("-Xlint:deprecation", "-Xlint:unchecked"))
     }
-}
 
+    // keep the default runClient provided by Loom; no custom task required
+}

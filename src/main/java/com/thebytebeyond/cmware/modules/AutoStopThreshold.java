@@ -1,6 +1,7 @@
 package com.thebytebeyond.cmware.modules;
 
 import com.thebytebeyond.cmware.CMWare;
+import meteordevelopment.meteorclient.addons.GithubRepo;
 import meteordevelopment.meteorclient.systems.modules.Module;
 import meteordevelopment.meteorclient.settings.*;
 import net.minecraft.client.MinecraftClient;
@@ -43,15 +44,18 @@ public class AutoStopThreshold extends Module {
     private boolean hasStopped = false;
 
     public AutoStopThreshold() {
-        // use the category instance provided by your addon
         super(CMWare.CATEGORY, "auto-stop-threshold", "Stops Baritone if you exceed set coordinates.");
     }
 
+    @Override
     public void onActivate() {
         hasStopped = false;
     }
 
-    // use whatever tick/update method your Meteor Module expects (onTick/tick/etc)
+    public GithubRepo getRepo() {
+        return new GithubRepo("Thebytebeyond", "CMWare");
+    }
+
     public void onTick() {
         MinecraftClient mc = MinecraftClient.getInstance();
         if (!autoStopEnabled.get() || mc == null || mc.player == null) return;
@@ -66,7 +70,6 @@ public class AutoStopThreshold extends Module {
         if (exceedsThreshold && (!stopOnce.get() || !hasStopped)) {
             if (mc.getNetworkHandler() != null) {
                 mc.getNetworkHandler().sendChatMessage("#stop");
-                // per your rule: no sendMessage used
                 hasStopped = true;
             }
         }
@@ -75,4 +78,8 @@ public class AutoStopThreshold extends Module {
             hasStopped = false;
         }
     }
+
+    public double getMaxX() { return maxX.get(); }
+    public double getMaxY() { return maxY.get(); }
+    public double getMaxZ() { return maxZ.get(); }
 }
