@@ -42,7 +42,8 @@ public class CMWare extends MeteorAddon {
                 categoriesField.setAccessible(true);
                 Object categoriesObj = categoriesField.get(Modules.get());
                 if (categoriesObj instanceof List<?> list) {
-                    if (!list.contains(CATEGORY)) list.add(CATEGORY);
+                    if (!list.contains(CATEGORY)) categoriesObj.getClass().getMethod("add", Object.class).invoke(categoriesObj, CATEGORY);
+
                 } else {
                     categoriesObj.getClass().getMethod("add", Object.class).invoke(categoriesObj, CATEGORY);
                 }
