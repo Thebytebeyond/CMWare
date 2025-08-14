@@ -79,6 +79,17 @@ public class AutoStopThreshold extends Module {
         }
     }
 
+    public boolean isThresholdBreached() {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        if (mc == null || mc.player == null) return false;
+
+        double x = mc.player.getX();
+        double y = mc.player.getY();
+        double z = mc.player.getZ();
+
+        return x > maxX.get() || y > maxY.get() || z > maxZ.get();
+    }
+
     public double getMaxX() { return maxX.get(); }
     public double getMaxY() { return maxY.get(); }
     public double getMaxZ() { return maxZ.get(); }

@@ -2,6 +2,8 @@ package com.thebytebeyond.cmware.hud;
 
 import com.thebytebeyond.cmware.CMWare;
 import com.thebytebeyond.cmware.modules.AutoStopThreshold;
+import meteordevelopment.meteorclient.settings.DoubleSetting;
+import meteordevelopment.meteorclient.settings.Setting;
 import meteordevelopment.meteorclient.systems.hud.Hud;
 import meteordevelopment.meteorclient.systems.hud.HudElement;
 import meteordevelopment.meteorclient.systems.hud.HudElementInfo;
@@ -24,15 +26,14 @@ public class AutoStopHud extends HudElement {
     @Override
     public void render(HudRenderer renderer) {
         AutoStopThreshold mod = Modules.get().get(AutoStopThreshold.class);
-        boolean on = mod != null && mod.isActive();
-
-        String text = on ? "AutoStop: ON" : "AutoStop: OFF";
+        boolean breached = mod != null && mod.isThresholdBreached();
+        String text = breached ? "AutoStop: ON" : "AutoStop: OFF";
 
         double x = box.getRenderX();
         double y = box.getRenderY();
 
-        Color colorHud = on ? Color.GREEN : Color.RED;
-        renderer.text(text, x, y, colorHud, true);
+        Color colorHud = breached ? Color.GREEN : Color.RED;
+        renderer.text(text, x, y, colorHud, true, 1.5);
 
         box.setSize(renderer.textWidth(text), renderer.textHeight());
     }
